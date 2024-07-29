@@ -3,7 +3,7 @@
 #Date: 4 August 2024
 #Purpose: Find and print the prime numbers between 3 and a user input value
 #Input: number1 - integer
-#Output: output - initial print; output2 - calculated prime numbers
+#Output: output - calculated prime numbers
 #Ref: https://prepinsta.com/java-program/prime-numbers-in-a-given-range-using-java/
 #Program dictionary:
 #	r4: outer loop counter
@@ -42,7 +42,7 @@ main:
 	#check limit	
 	MOV r3, #3
 	CMP r4, r3
-	LDR r0, =output2
+	LDR r0, =output
 	MOV r1, r4
 	BLEQ printf
 	CMP r4, r5			//compare counter to limit
@@ -76,7 +76,7 @@ main:
 
 	    #get next value
 	    CMP r6, r7
-	    LDR r0, =output2
+	    LDR r0, =output
 	    MOV r1, r4
 	    BLEQ printf
 
@@ -107,9 +107,6 @@ main:
     #number variable
     number1:	.word	0
 
-    #output string if invalid entries
-    output:	.asciz  "The loop counter is: %d.\n"
-
     #output prime numbers
-    output2:	.asciz	"%d\n"
+    output:	.asciz	"%d\n"
 
