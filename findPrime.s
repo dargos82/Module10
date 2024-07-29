@@ -3,7 +3,7 @@
 #Date: 4 August 2024
 #Purpose: Find and print the prime numbers between 3 and a user input value
 #Input: number1 - integer
-#Output: outputError - if invalid entries
+#Output: output - initial print; output2 - calculated prime numbers
 #Ref: https://prepinsta.com/java-program/prime-numbers-in-a-given-range-using-java/
 #Program dictionary:
 #	r4: outer loop counter
