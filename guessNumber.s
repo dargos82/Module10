@@ -42,7 +42,10 @@ main:
     LDR r5, [r5]
 
     #generate number
-    MOV r4, #50				//temporary until figure out random number
+    MOV r0, r5				//move maximum to r0 for use by generateRandom
+    BL generateRandom
+    MOV r4, r0				//r4 = generated random number
+    //MOV r4, #50			//temporary until figure out random number
 
     #Initialize outer loop
     MOV r7, #0				//initialize number of guesses to 0
@@ -65,7 +68,7 @@ main:
     	LDR r6, [r6]
 	
 	ADD r7, r7, #1			//increment counter
-	CMP r6, r4
+	CMP r6, r4			//check if guess is correct
 	BEQ EndOuterLoop		//if guess = generated number, exit loop
 
 	#loop statement
@@ -76,7 +79,7 @@ main:
 	    #check limit
 	    	    
 	    #loop statement
-
+	    
 	    #get next value
 	
 	EndInnerLoop:	
