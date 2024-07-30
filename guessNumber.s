@@ -113,7 +113,7 @@ main:
     	LDR r1, =control
     	BL scanf
 
- 	LDR r8, =control		//load r8 with user contrl input
+ 	LDR r8, =control		//load r8 with user control input
   	LDR r8, [r8]
         B StartOuterLoop   	
 
