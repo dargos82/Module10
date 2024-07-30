@@ -1,8 +1,8 @@
 
-.global findMaxOf3
+.global generateRandom
 
 .text
-findMaxOf3:
+generateRandom:
 
     #push stack
     SUB sp, sp, #4
