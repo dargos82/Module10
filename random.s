@@ -22,9 +22,10 @@ main:
     SUB sp, sp, #4
     STR lr, [sp, #0]
    
-    MOV r0, #256
-    BL srand
-    BL rand
+    //MOV r0, #256
+    BL time                    //see if this works, should return an integer in r0
+    BL srand                    //integer from above becomes seed
+    BL rand                    //seed used to generate random number
     
     MOV r1, r0
     LDR r0, =output
