@@ -8,62 +8,26 @@ generateRandom:
     SUB sp, sp, #4
     STR lr, [sp]
     
-    #if (r6 > r7 && r6 > r8)
-    MOV r1, #0
-    CMP r6, r7
-    ADDGT r1, #1		//if r6 > r7, r1 = 1
+    #store maximum
+    MOV r2, r0			//r2 = maximum
 
-    MOV r2, #0
-    CMP r6, r8
-    ADDGT r2, #1		//if r6 > r8, r2 = 1
+    #generate random number    
+    //MOV r0, #256
+    BL time                    //see if this works, should return an integer in r0; otherwise need to get a seed value
+    BL srand                    //integer from above becomes seed
+    BL rand                    //seed used to generate random number, stored in r0
 
-    AND r2, r1, r2		//r2 = 1 if r1 = 1 AND r2 = 1 (r6 is max)
-    MOV r1, #1
-    CMP r2, r1
-    BNE secondValue
-	MOV r0, r6
-	B endIf     
-
-    secondValue:
-	#else if (r7 > r6 && r7 > r8)
-	MOV r1, #0
-    	CMP r7, r6
- 	ADDGT r1, #1		//if r7 > r6, r1 = 1
-
-        MOV r2, #0
-        CMP r7, r8
-        ADDGT r2, #1		//if r7 > r8, r2 = 1
-
-        AND r2, r1, r2		//r2 = 1 if r1 = 1 AND r2 = 1 (r7 is max)
-        MOV r1, #1
-        CMP r2, r1
-        BNE thirdValue
-	   MOV r0, r7
-	   B endIf     
-
-    thirdValue:
-	#else if (r8 > r6 && r8 > r7)
-	MOV r1, #0
-    	CMP r8, r6
- 	ADDGT r1, #1		//if r8 > r6, r1 = 1
-
-        MOV r2, #0
-        CMP r8, r7
-        ADDGT r2, #1		//if r8 > r7, r2 = 1
-
-        AND r2, r1, r2		//r2 = 1 if r1 = 1 AND r2 = 1 (r8 is max)
-        MOV r1, #1
-        CMP r2, r1
-        BNE error
-	   MOV r0, r8
-	   B endIf     
-
-    error:
-	#else max not identified
-	MOV r0, #-1
-	B endIf
-
-    endIf:
+    #get number in range 0 to maximum
+    MOV r3, r0			//store generated random number
+    ADD r1, r2, #1		//modulo = maximum + 1; move to r1
+    BL __aeabi_idiv		//r0 = generated random number / modulo
+    MUL r0, r0, r1		//r0 = quotient * modulo
+    SUB r0, r3, r0		//r0 = remainder = number to guess 
+    
+    //BL rand
+    //MOV r1, r0
+    //LDR r0, =output
+    //BL printf
 
     #pop stack
     LDR lr, [sp]
@@ -72,5 +36,5 @@ generateRandom:
 
 .data
 
-#END findMaxOf3
+#END generateRandom
 
