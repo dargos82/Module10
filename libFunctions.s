@@ -19,10 +19,11 @@ generateRandom:
 
     #get number in range 0 to maximum
     MOV r3, r0			//store generated random number
-    ADD r1, r2, #1		//modulo = maximum + 1; move to r1
+    MOV r1, r2    		//modulo = maximum; move to r1
     BL __aeabi_idiv		//r0 = generated random number / modulo
     MUL r0, r0, r1		//r0 = quotient * modulo
-    SUB r0, r3, r0		//r0 = remainder = number to guess 
+    SUB r0, r3, r0		//r0 = remainder
+    ADD r0, r0, #1      //r0 = number to guess
     
     //BL rand
     //MOV r1, r0
