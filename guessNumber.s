@@ -100,7 +100,8 @@ main:
 	
 	EndInnerLoop:	
 
-	MOV r1, r7			//move number of guesses from r7 to r1 for printing
+        MOV r1, r4			//move random number from r4 to r1 for printing
+	MOV r2, r7			//move number of guesses from r7 to r2 for printing
 	LDR r0, =correctGuess
 	BL printf
 	
@@ -152,7 +153,7 @@ main:
     guess:	.word	0
 
     #output for correct guess
-    correctGuess:	.asciz	"\nCongratulations!  You guessed the number in %d guess(es)!"
+    correctGuess:	.asciz	"\nCongratulations!  You guessed the number (%d) in %d guess(es)!"
 
     #output for game control
     controlPrompt:	.asciz	"\nWould you like to play again? 1 to continue; 2 to quit: \n"
