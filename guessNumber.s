@@ -108,7 +108,7 @@ main:
   	LDR r0, =controlPrompt
    	BL printf
 
-        #store the guess		//scan and load user control input
+        #store the input		//scan and load user control input
     	LDR r0, =controlFormat
     	LDR r1, =control
     	BL scanf
