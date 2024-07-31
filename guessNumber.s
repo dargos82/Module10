@@ -4,16 +4,15 @@
 #Purpose: Guess a randomly generated number
 #Input: maximum - integer; guess - integer; control - integer
 #Output: prompt - get maximum value for range; guessPrompt - get the user's guess; correctGuess - output when number is guessed;
-#controlPrompt - get user input to continue or quit; endGame - output when game is ended; tooHigh - output when guessed number
-#is too high; tooLow - output when guessed number is too low
-#Ref:
+#controlPrompt - get user input to continue or quit; endGame - output when game is ended; outputTooHigh - output when guessed number
+#is too high; outputTooLow - output when guessed number is too low
 #Program dictionary:
 #	r4: generated number
 #	r5: maximum
 #	r6: guess
 #	r7: number of guesses
 #	r8: outer loop control
-#	r9: 
+#	r9: maximum in function
 
 
 .text
@@ -29,6 +28,13 @@ main:
     STR r7, [sp, #16]
     STR r8, [sp, #20]
     STR r9, [sp, #24]
+
+    MOV r8, #0				//initialize outer loop control to 0
+
+    StartOuterLoop:
+    MOV r0, #2
+    CMP r8, r0
+    BEQ EndOuterLoop
 
     #prompt user for maximum value of range
     LDR r0, =prompt1
@@ -47,17 +53,9 @@ main:
     MOV r0, r5				//move maximum to r0 for use by generateRandom
     BL generateRandom
     MOV r4, r0				//r4 = generated random number
-    //MOV r4, #50			//temporary until figure out random number
 
-    MOV r8, #0				//initialize outer loop control to 0
     MOV r7, #0				//initialize number of guesses to 0
-    
-    StartOuterLoop:
-    #Initialize outer loop
-    MOV r0, #2
-    CMP r8, r0
-    BEQ EndOuterLoop			//if player has not selected to quit, go to inner loop
-    	
+       	
    	#loop statement
 
 	StartInnerLoop:
@@ -90,13 +88,15 @@ main:
      	    CMP r6, r4
 	    BLT tooLow
 	    
-     	    tooHigh:
-	  	LDR r0, =tooHigh
-    		B StartInnerLoop
+     	tooHigh:
+	    LDR r0, =outputTooHigh
+	    BL printf
+    	    B StartInnerLoop
 
-      	    tooLow:
-	   	LDR r0, =tooLow
-     		B StartInnerLoop
+      	tooLow:
+	    LDR r0, =outputTooLow
+	    BL printf
+     	    B StartInnerLoop
 	
 	EndInnerLoop:	
 
@@ -155,7 +155,7 @@ main:
     correctGuess:	.asciz	"\nCongratulations!  You guessed the number in %d guess(es)!"
 
     #output for game control
-    controlPrompt:	.asciz	"\nWould you like to play again? 1 to continue; 2 to quit: /n"
+    controlPrompt:	.asciz	"\nWould you like to play again? 1 to continue; 2 to quit: \n"
 
     #control format
     controlFormat:	.asciz	"%d"
@@ -164,11 +164,11 @@ main:
     control:	.word	0
 
     #end statement
-    endGame:	.asciz	"/nThank you for playing!"
+    endGame:	.asciz	"\nThank you for playing!\n"
 
     #too high statement
-    tooHigh:	.asciz	"/nToo high!  Try again./n"
+    outputTooHigh:	.asciz	"\nToo high!  Try again.\n"
 
     #too low statement
-    tooLow:	.asciz	"/nToo low!  Try again./n"
+    outputTooLow:	.asciz	"\nToo low!  Try again.\n"
 
